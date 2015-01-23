@@ -49,7 +49,7 @@
 
   <slide class="segue">
     <hgroup class="auto-fadein">
-      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What we want to achieve...</h1>
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What we hope to achieve...</h1>
     </hgroup>
   </slide>
 
@@ -72,7 +72,7 @@
 
   <slide>
     <hgroup>
-      <h2 class="">Make sense of data</h2>
+      <h2 class="">Making sense of data</h2>
     </hgroup>
     <article style="text-align: center">
       <img src="images/semantic_web.jpg">
@@ -126,8 +126,7 @@ Accept: text/turtle
 HTTP/1.1 200 OK
 Content-Type: text/turtle
 ETag: "8caab0784220148bfe98b738d5bb6d13"
-Link: &lt;http://www.w3.org/ns/ldp#BasicContainer&gt;; rel="type",
-      &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
+Link: &lt;http://www.w3.org/ns/ldp#BasicContainer&gt;; rel="type"
 
 @prefix dcterms: &lt;http://purl.org/dc/terms/&gt;.
 @prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt;.
@@ -142,15 +141,42 @@ Link: &lt;http://www.w3.org/ns/ldp#BasicContainer&gt;; rel="type",
 
   <slide>
     <hgroup>
+      <h2>Creating a new basic container</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="HTTP">
+POST alice/ HTTP/1.1
+Host: example.org
+Content-Type: text/turtle
+<b>Link: &lt;http://www.w3.org/ns/ldp/BasicContainer&gt;; rel="type"</b>
+<b>Slug: photos</b>
+
+@prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+
+<b>&lt;&gt; a ldp:Container, ldp:BasicContainer;</b>
+   dcterms:title "Photos of Alice" ;
+   dcterms:description "This container will contain photos of Alice." .
+</pre>
+    <pre class="prettyprint" data-lang="HTTP">
+HTTP/1.1 201 Created
+<b>Location: http://example.org/alice/photos/</b>
+ETag: "fffab0784220148bfe98b738d5bb6a00"
+Content-Length: 0
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Creating a new resource</h2>
     </hgroup>
     <article>
       <pre class="prettyprint" data-lang="HTTP">
 POST /alice/ HTTP/1.1
 Host: example.org
-<b>Slug: foaf</b>
 Content-Type: text/turtle
-Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
+<b>Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"</b>
 
 @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
@@ -161,7 +187,7 @@ Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
 </pre>
     <pre class="prettyprint" data-lang="HTTP">
 HTTP/1.1 201 Created
-<b>Location: http://example.org/alice/foaf</b>
+<b>Location: http://example.org/alice/b0da1</b>
 ETag: "8caab0784220148bfe98b738d5bb6d13"
 Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
 </pre>
@@ -183,83 +209,60 @@ If-Match: "8caab0784220148bfe98b738d5bb6d13"
 HTTP/1.1 204 No Content
 </pre>
     <p>&nbsp;</p>
-    <h1>Note: non-empty containers cannot be deleted!</h1>
+    <h1>Note: non-empty containers will not be deleted!</h1>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Code Slide (Smaller Font)</h2>
+      <h2>Discovering server support</h2>
     </hgroup>
-    <article class="smaller">
-      <pre class="prettyprint" data-lang="javascript">
-// Say hello world until the user starts questioning
-// the meaningfulness of their existence.
-function helloWorld(world) {
-  for (var i = 42; --i &gt;= 0;) {
-    alert('Hello ' + String(world));
-  }
-}
+    <article>
+      <pre class="prettyprint" data-lang="HTTP">
+OPTIONS /alice/ HTTP/1.1
+Host: example.org
 </pre>
-<pre class="prettyprint" data-lang="css">
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-&lt;/style&gt;
+    <pre class="prettyprint" data-lang="HTTP" style="word-wrap: break-word">
+HTTP/1.1 200 OK
+Allow: GET, PUT, POST, OPTIONS, HEAD, DELETE, PATCH
+Accept-Post: text/turtle;charset=utf-8,text/n3;charset=utf-8,text/nt;charset=utf-8,text/css;charset=utf-8,text/html;charset=utf-8,text/javascript;charset=utf-8,text/plain;charset=utf-8,application/rdf+xml;charset=utf-8,application/json;charset=utf-8,multipart/form-data,image/jpeg,image/jpeg,image/png,image/gif,font/otf
+Link: &lt;http://www.w3.org/ns/ldp#BasicContainer&gt;; rel="type"
 </pre>
-<pre class="prettyprint" data-lang="html">
-&lt;!DOCTYPE html>
-&lt;html>
-&lt;head>
-  &lt;title>My Awesome Page&lt;/title>
-&lt;/head>
-&lt;body>
-  &lt;p&gt;Hello world&lt;/p&gt;
-&lt;body>
-&lt;/html>
+    <p>Optional headers:</p>
+    <pre class="prettyprint" data-lang="HTTP" style="word-wrap: break-word">
+<b>Link: &lt;http://example.org/alice/,acl&gt;; rel="acl"</b>
+<b>User: https://alice.example.org/profile/card#me</b>
+Access-Control-Allow-Methods: GET, PUT, POST, OPTIONS, HEAD, MKCOL, DELETE, PATCH
+Access-Control-Allow-Origin: *
 </pre>
     </article>
   </slide>
 
-<!-- 
-  <slide class="segue dark nobackground">
-    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+  <slide class="segue">
     <hgroup class="auto-fadein">
-      <h2>Segue Slide</h2>
-      <h3>Subtitle Placeholder</h3>
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What else?</h1>
     </hgroup>
   </slide>
- -->
-  
-<!-- 
-  <slide class="segue dark quote nobackground">
-    <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
-    <article class="flexbox vleft auto-fadein">
-      <q>
-        This is an example of quote text.
-      </q>
-      <div class="author">
-        Name<br>
-        Company
-      </div>
+
+  <slide class="segue">
+    <article>
+      <iframe src="https://linkeddata.github.io/warp/#/list/https/deiu.me/"></iframe>
     </article>
-  </slide> -->
+  </slide>
+
+  <!-- END -->
 
   <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/w3c-logo.png"></aside>
-    <article class="flexbox vleft auto-fadein">
+    <article class="vleft auto-fadein">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
       <h2>&lt;/Thank You&gt;</h2>
-      <p>Slides available at: http://</p>
+      <p>Slides available at: https://deiu.github.io/semweb-apps-presentation/</p>
     </article>
     <p class="auto-fadein" data-config-contact>
       <!-- populated from slide_config.json -->
     </p>
-  </slide>
-
-  <slide class="logoslide dark nobackground">
-    <article class="flexbox vcenter">
-      <span><img src="images/google_developers_logo_white.png"></span>
-    </article>
   </slide>
 
   <slide class="backdrop"></slide>

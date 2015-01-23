@@ -1291,7 +1291,7 @@ aside.gdbar.right {
   right: 0;
   left: -moz-initial;
   left: initial;
-  top: 254px;
+  
   /* 96 is height of gray icon bar */
   -webkit-transform: rotateZ(180deg);
   -moz-transform: rotateZ(180deg);
