@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/w3c-logo.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What we have now...</h1>
+    </hgroup>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/vendor-lockin.jpg)">
+    <hgroup>
+      <h2 class="white">Vendor lock-in</h2>
+    </hgroup>
+    <footer class="source white">Source: http://www.idgconnect.com/</footer>
+  </slide>
+
+  <slide class="" style="">
+    <hgroup>
+      <h2 class="">Data silos</h2>
+    </hgroup>
+    <article style="text-align: center">
+      <img src="images/data-silos.png">
+    </article>
+    <footer class="source">Source: http://theeconomist.com/</footer>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What we want to achieve...</h1>
+    </hgroup>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/creativity.jpg)">
+    <hgroup>
+      <h2 class="white">Creativity and innovation</h2>
+    </hgroup>
+    <footer class="source white">Source: http://innovationpov.com/</footer>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2 class="">Ability to add new features</h2>
+    </hgroup>
+    <article style="text-align: center">
+      <img src="images/feature-branch.png">
+    </article>
+    <footer class="source">Source: https://www.atlassian.com</footer>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2 class="">Make sense of data</h2>
+    </hgroup>
+    <article style="text-align: center">
+      <img src="images/semantic_web.jpg">
+    </article>
+    <footer class="source">Source: https://www.swapconf.it/</footer>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">Enter...Linked Data Platform</h1>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>LDP</h2>
+    </hgroup>
+    <article>
+      <p>&nbsp;</p>
+      <ul>
+        <li><a href="http://www.w3.org/TR/ldp/">W3C Proposed Recommendation</a> since December 2014</li>
+        <li>an architecture for <b>read-write</b> Linked Data on the Web</li>
+        <li>defines a set of rules for RESTful HTTP operations on Web resources
+          <ul>
+            <li>RDF</li>
+            <li>non-RDF (e.g. text, binary)</li>
+          </ul>
+        </li>
+        <li>filesytem-like structure for data
+          <ul>
+            <li>containers (folders)</li>
+            <li>resources within containers (files)</li>
+          </ul>
+        </li>
+      </ul>
+      <h1>Note: containers are also RDF resources!</h1>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Retrieving container information</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="HTTP">
+GET <b>/c1/</b> HTTP/1.1
+Host: example.org
+Accept: text/turtle
+</pre>
+    <pre class="prettyprint" data-lang="HTTP">
+HTTP/1.1 200 OK
+Content-Type: text/turtle
+ETag: "8caab0784220148bfe98b738d5bb6d13"
+Link: &lt;http://www.w3.org/ns/ldp#BasicContainer&gt;; rel="type",
+      &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
+
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt;.
+@prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt;.
+
+&lt;http://example.org<b>/c1/</b>&gt;
+   <b>a ldp:BasicContainer;</b>
+   dcterms:title "A very simple container";
+   <b>ldp:contains &lt;r1&gt;, &lt;r2&gt;, &lt;r3&gt;.</b>
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Creating a new resource</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="HTTP">
+POST /alice/ HTTP/1.1
+Host: example.org
+<b>Slug: foaf</b>
+Content-Type: text/turtle
+Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
+
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+
+&lt;&gt; a foaf:PersonalProfileDocument;
+    foaf:primaryTopic &lt;#me&gt; .
+&lt;#me&gt; a foaf:Person;
+    foaf:name 'Alice Smith'  .
+</pre>
+    <pre class="prettyprint" data-lang="HTTP">
+HTTP/1.1 201 Created
+<b>Location: http://example.org/alice/foaf</b>
+ETag: "8caab0784220148bfe98b738d5bb6d13"
+Link: &lt;http://www.w3.org/ns/ldp#Resource&gt;; rel="type"
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Deleting a resource</h2>
+    </hgroup>
+    <article>
+      <p>&nbsp;</p>
+      <pre class="prettyprint" data-lang="HTTP">
+DELETE /alice/foaf HTTP/1.1
+Host: example.org
+If-Match: "8caab0784220148bfe98b738d5bb6d13"
+</pre>
+    <pre class="prettyprint" data-lang="HTTP">
+HTTP/1.1 204 No Content
+</pre>
+    <p>&nbsp;</p>
+    <h1>Note: non-empty containers cannot be deleted!</h1>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Code Slide (Smaller Font)</h2>
+    </hgroup>
+    <article class="smaller">
+      <pre class="prettyprint" data-lang="javascript">
+// Say hello world until the user starts questioning
+// the meaningfulness of their existence.
+function helloWorld(world) {
+  for (var i = 42; --i &gt;= 0;) {
+    alert('Hello ' + String(world));
+  }
+}
+</pre>
+<pre class="prettyprint" data-lang="css">
+&lt;style&gt;
+  p { color: pink }
+  b { color: blue }
+&lt;/style&gt;
+</pre>
+<pre class="prettyprint" data-lang="html">
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+  &lt;title>My Awesome Page&lt;/title>
+&lt;/head>
+&lt;body>
+  &lt;p&gt;Hello world&lt;/p&gt;
+&lt;body>
+&lt;/html>
+</pre>
+    </article>
+  </slide>
+
+<!-- 
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Segue Slide</h2>
+      <h3>Subtitle Placeholder</h3>
+    </hgroup>
+  </slide>
+ -->
+  
+<!-- 
+  <slide class="segue dark quote nobackground">
+    <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <q>
+        This is an example of quote text.
+      </q>
+      <div class="author">
+        Name<br>
+        Company
+      </div>
+    </article>
+  </slide> -->
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/w3c-logo.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;/Thank You&gt;</h2>
+      <p>Slides available at: http://</p>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="logoslide dark nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/google_developers_logo_white.png"></span>
+    </article>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
