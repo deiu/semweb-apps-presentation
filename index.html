@@ -238,6 +238,26 @@ Access-Control-Allow-Origin: *
     </article>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>LDP recap</h2>
+    </hgroup>
+    <article>
+      <p>LDP 1.0</p>
+      <ul>
+        <li>full CRUD support through RESTful HTTP operations</li>
+        <li>interation model driven by HTTP headers</li>
+        <li>filesytem-like structure for data</li>
+      </ul>
+      <p>Planned extensions (LDP 1.1)</p>
+      <ul>
+        <li>simple way of patching resources - <a href="http://www.w3.org/TR/ldpatch/">LD Patch</a> (REC track)</li>
+        <li>paging (REC track)</li>
+        <li>resource quering and filtering</li>
+      </ul>
+    </article>
+  </slide>
+
   <slide class="segue">
     <hgroup class="auto-fadein">
       <h1 class="dark" style="font-size:65px;padding-bottom:100px">Web Access Control</h1>
@@ -265,7 +285,7 @@ Accept: text/turtle
 &lt;#acl&gt; a acl:Authorization ;
            acl:accessTo &lt;&gt; ;
            acl:mode acl:Read, acl:Write ; 
-           <b>acl:agent &lt;foaf#me&gt</b>; .
+           <b>acl:agent &lt;foaf#me&gt;</b>; .
 </pre>
     <a href="https://www.w3.org/wiki/WebAccessControl">More info on WAC</a>
     </article>
