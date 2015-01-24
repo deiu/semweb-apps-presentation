@@ -240,13 +240,49 @@ Access-Control-Allow-Origin: *
 
   <slide class="segue">
     <hgroup class="auto-fadein">
-      <h1 class="dark" style="font-size:65px;padding-bottom:100px">What else?</h1>
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">Web Access Control</h1>
     </hgroup>
   </slide>
 
-  <slide class="segue">
+  <slide>
+    <hgroup>
+      <h2>WAC policy</h2>
+    </hgroup>
     <article>
-      <iframe src="https://linkeddata.github.io/warp/#/list/https/deiu.me/"></iframe>
+      <pre class="prettyprint" data-lang="HTTP">
+<b>GET /alice/,acl HTTP/1.1</b>
+Host: example.org
+Accept: text/turtle
+</pre>
+    <pre class="prettyprint" data-lang="Turtle" style="word-wrap: break-word">
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl#&gt; .
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+
+&lt;#readall&gt; a acl:Authorization ;
+           acl:accessTo &lt;.&gt; ;
+           acl:mode acl:Read ; 
+           <b>acl:agentClass foaf:Agent</b> .
+&lt;#acl&gt; a acl:Authorization ;
+           acl:accessTo &lt;&gt; ;
+           acl:mode acl:Read, acl:Write ; 
+           <b>acl:agent &lt;foaf#me&gt</b>; .
+</pre>
+    <a href="https://www.w3.org/wiki/WebAccessControl">More info on WAC</a>
+    </article>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">The result...</h1>
+    </hgroup>
+  </slide>
+
+  <slide class="nobackground">
+    <hgroup>
+      <h2>Personal data servers</h2>
+    </hgroup>
+    <article>
+      <iframe src="https://linkeddata.github.io/warp/#/list/https/deiu.rww.io/"></iframe>
     </article>
   </slide>
 
