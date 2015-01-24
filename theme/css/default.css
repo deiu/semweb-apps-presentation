@@ -715,7 +715,9 @@ button:not(:disabled):active {
 .black {
   color: black !important;
 }
-
+.dark {
+  color: #797979 !important;
+}
 /* line 468, ../scss/default.scss */
 .columns-2 {
   -webkit-column-count: 2;
