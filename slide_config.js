@@ -22,8 +22,8 @@ var SLIDE_CONFIG = {
 
   // Author information
   presenters: [{
-    name: 'Andrei Sambra',
-    company: 'Research associate<br>MIT/W3C',
+    name: 'Andrei Sambra<br>',
+    company: 'MIT/W3C',
     //gplus: 'http://plus.google.com/1234567890',
     twitter: '@therealdeiu',
     www: 'https://deiu.rww.io/profile/card#me',

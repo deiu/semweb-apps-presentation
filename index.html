@@ -9,6 +9,21 @@
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
   <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+  <script>
+    // Listen to WebIDAuth events
+    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    var eventListener = window[eventMethod];
+    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+    addEventListener(messageEvent,function(e) {
+      if (e.data.slice(0,5) == 'User:') {
+        console.log(e.data);
+        document.querySelector('#webid').innerHTML = e.data;
+      } else {
+        console.log("Auth failed!");
+        console.log(e.data);
+      }
+    },false);
+  </script>
 </head>
 <body style="opacity: 0">
 
@@ -466,18 +481,157 @@ Accept: text/turtle
 
   <slide class="segue">
     <hgroup class="auto-fadein">
-      <h1 class="dark" style="font-size:65px;padding-bottom:100px">The result...</h1>
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">Example apps</h1>
     </hgroup>
   </slide>
 
   <slide class="nobackground">
     <hgroup>
-      <h2>Personal (linked) data servers</h2>
+      <h2>Authentication &amp; signup</h2>
     </hgroup>
+    <br>
+    <p>
+      <span id="webid" class="green"></span>
+    </p>
+    <br>
     <article>
-      <iframe src="https://linkeddata.github.io/warp/#/list/https/deiu.rww.io/"></iframe>
+      <iframe id="webidauth" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+      <script>
+        var providerURI = 'https://linkeddata.github.io/signup/index.html?ref=';
+        document.querySelector('#webidauth').setAttribute('src', providerURI+window.location.protocol+'//'+window.location.host);
+      </script>
     </article>
   </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Authentication - custom events</h2>
+    </hgroup>
+    <article>
+      <p>Widget:</p>
+      <pre class="prettyprint" data-lang="Javascript">
+WebIDAuth : { details: { 
+                auth: string, // type of auth method (e.g. WebID-TLS)
+                success: bool, // true if auth was successful
+                <b>user: string // the WebID of the user</b>
+              } }</pre>
+      <p>App:</p>
+      <pre class="prettyprint" data-lang="Javascript">
+window.addEventListener('WebIDAuth',function(e) {
+  if (e.details.success === true) {
+    <b>webid = e.datails.user; // set some App-specific user variable</b>
+  } else {
+    console.log("Auth failed!");
+  }
+},false);
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>New WebID accounts</h2>
+    </hgroup>
+    <article>
+      <br>
+      <ul>
+        <li>personal (linked) data space -- e.g <strong>https://user.example.org/</strong></li>
+        <li>WebID -- e.g. <strong>https://user.example.org/profile/card#me</strong></li>
+        <li>WebID profile</li>
+        <li>default workspaces -- e.g. Public, Private, Work, Family, etc.</li>
+        <li>preferences file; may contain preferred language, date format, apps, etc.</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="nobackground">
+    <hgroup>
+      <h2>WARP - Personal data space browser</h2>
+    </hgroup>
+    <article>
+      <iframe id="warp" src="https://linkeddata.github.io/warp/#/list/"></iframe>
+    </article>
+  </slide>
+
+  <slide class="nobackground">
+    <hgroup>
+      <h2>CIMBA - decentralized microblogging</h2>
+    </hgroup>
+    <article>
+      <iframe id="cimba" src="http://cimba.co/"></iframe>
+    </article>
+  </slide>
+
+  <slide class="nobackground">
+    <hgroup>
+      <h2>LD-cal - calendar / events</h2>
+    </hgroup>
+    <article>
+      <iframe id="cimba" src="https://deiu.rww.io/apps/cal/index.html"></iframe>
+    </article>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">100% decentralized</h1>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Why write a client-side app?</h2>
+    </hgroup>
+    <article>
+      <br>
+      <ul>
+        <li>local, browser extension or anywhere on the Web</li>
+        <li>privacy-aware* -- p2p between browser and data spaces</li>
+        <li>takes advantage of social graphs</li>
+        <li>does not trap data within silos</li>
+        <li>uses the Web as an OS:
+          <ul>
+            <li>file system-like storage (LDP)</li>
+            <li>data reused in multiple apps</li>
+          </ul>
+        </li>
+      </ul>
+      <br>
+      <p><small>* if it pass (your) privacy/security audit</small></p>
+    </article>
+  </slide>
+
+  <slide class="segue">
+    <hgroup class="auto-fadein">
+      <h1 class="dark" style="font-size:65px;padding-bottom:100px">TODO</h1>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>TODO</h2>
+    </hgroup>
+    <article>
+      <br>
+      <ul>
+        <li>extend LDP with:
+          <ul>
+            <li>indexing &amp; search</li>
+            <li>filtering</li>
+          </ul>
+        </li>
+        <li>real-time notifications!</li>
+        <li>app store
+          <ul>
+            <li>privacy audits for apps</li>
+            <li>easy discovery &amp; recommendations</li>
+          </ul>
+        </li>
+        <li>and finally...</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/standardize_all.jpg)"></slide>
 
   <!-- END -->
 
@@ -486,8 +640,9 @@ Accept: text/turtle
     <article class="vleft auto-fadein">
       <p>&nbsp;</p>
       <p>&nbsp;</p>
-      <h2>&lt;/Thank You&gt;</h2>
-      <p>Slides available at: https://deiu.github.io/semweb-apps-presentation/</p>
+      <h2>&lt;/Presentation&gt;</h2>
+      <p>Slides available at:</p>
+      <h3>https://deiu.github.io/semweb-apps-presentation/</h3>
     </article>
     <p class="auto-fadein" data-config-contact>
       <!-- populated from slide_config.json -->
