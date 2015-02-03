@@ -87,12 +87,11 @@
 
   <slide>
     <hgroup>
-      <h2 class="">Making sense of data</h2>
+      <h2 class="">A simple use-case</h2>
     </hgroup>
     <article style="text-align: center">
-      <img src="images/semantic_web.jpg">
+      <img src="images/interop-overview.png">
     </article>
-    <footer class="source">Source: https://www.swapconf.it/</footer>
   </slide>
 
   <slide class="segue">
@@ -297,6 +296,7 @@ Access-Control-Allow-Origin: *
         <li>users and groups identified by HTTP URIs (i.e. WebIDs)</li>
         <li>vocabulary: <a href="http://www.w3.org/ns/auth/acl">http://www.w3.org/ns/auth/acl</a></li>
         <li>access modes: Read / Write / Append / Control</li>
+        <li>access can be restricted based on Origin</li>
       </ul>
       <br>
       <p><a href="https://www.w3.org/wiki/WebAccessControl">More info on WAC</a></p>
@@ -539,7 +539,7 @@ window.addEventListener('WebIDAuth',function(e) {
         <li>WebID -- e.g. <strong>https://user.example.org/profile/card#me</strong></li>
         <li>WebID profile</li>
         <li>default workspaces -- e.g. Public, Private, Work, Family, etc.</li>
-        <li>preferences file; may contain preferred language, date format, apps, etc.</li>
+        <li>preferences file; may contain all kinds of useful data (e.g. preferred language, date format, apps, etc.</li>
       </ul>
     </article>
   </slide>
@@ -579,15 +579,16 @@ window.addEventListener('WebIDAuth',function(e) {
 
   <slide>
     <hgroup>
-      <h2>Why write a client-side app?</h2>
+      <h2>Why switch to client-side apps?</h2>
     </hgroup>
     <article>
       <br>
       <ul>
-        <li>local, browser extension or anywhere on the Web</li>
+        <li>run locally, browser extension or anywhere on the Web</li>
         <li>privacy-aware* -- p2p between browser and data spaces</li>
         <li>takes advantage of social graphs</li>
         <li>does not trap data within silos</li>
+        <li>very extensible (leads to feature-rich apps)</li>
         <li>uses the Web as an OS:
           <ul>
             <li>file system-like storage (LDP)</li>
@@ -596,7 +597,7 @@ window.addEventListener('WebIDAuth',function(e) {
         </li>
       </ul>
       <br>
-      <p><small>* if it pass (your) privacy/security audit</small></p>
+      <p><small>* if it passes (your) privacy/security audits</small></p>
     </article>
   </slide>
 
@@ -671,8 +672,27 @@ window.addEventListener('WebIDAuth',function(e) {
         <li><strike><a href="https://github.com/linkeddata/ldphp">ldphp</a> (LDP server written in php)</strike></li>
         <li><a href="https://github.com/linkeddata/signup">WebID Login/Signup</a></li>
         <li><a href="https://github.com/deiu/warp">WARP</a> LDP resource browser</li>
+        <li><a href="https://github.com/linkeddata/cimba">CIMBA</a> Microblogging app</li>
         <li><a href="https://github.com/linkeddata/app-bp">Boilerplate app</a> (generic LD starter app using Angular)</li>
       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2 class="">WebID-TLS -- delegated authentication</h2>
+    </hgroup>
+    <article style="text-align: center">
+      <img src="images/webid-delegated-auth.png">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2 class="">WebID -- access delegation</h2>
+    </hgroup>
+    <article style="text-align: center">
+      <img src="images/webid-access-delegation.png">
     </article>
   </slide>
 
