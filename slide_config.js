@@ -1,8 +1,8 @@
 var SLIDE_CONFIG = {
   // Slide settings
   settings: {
-    title: 'Building Decentralized Applications',
-    subtitle: 'with the Linked Data Platform',
+    title: 'Crosscloud',
+    subtitle: 'A SoLiD effort to redecentralize the Web',
     //eventInfo: {
     //  title: 'Google I/O',
     //  date: '6/x/2013'
@@ -26,8 +26,9 @@ var SLIDE_CONFIG = {
     company: 'MIT/W3C',
     //gplus: 'http://plus.google.com/1234567890',
     twitter: '@therealdeiu',
-    www: 'https://deiu.rww.io/profile/card#me',
-    github: 'http://github.com/deiu'
+    www: 'https://deiu.me/profile#me',
+    github: 'http://github.com/deiu',
+    jobs: 'http://crosscloud.org/jobs/'
   }/*, {
     name: 'Second Name',
     company: 'Job Title, Google',
