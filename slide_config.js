@@ -29,13 +29,6 @@ var SLIDE_CONFIG = {
     www: 'https://deiu.me/profile#me',
     github: 'http://github.com/deiu',
     jobs: 'http://crosscloud.org/jobs/'
-  }/*, {
-    name: 'Second Name',
-    company: 'Job Title, Google',
-    gplus: 'http://plus.google.com/1234567890',
-    twitter: '@yourhandle',
-    www: 'http://www.you.com',
-    github: 'http://github.com/you'
-  }*/]
+  }]
 };
 
